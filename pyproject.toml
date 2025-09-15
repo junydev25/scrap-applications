@@ -9,5 +9,6 @@ dependencies = []
 [dependency-groups]
 dev = [
     "black>=25.1.0",
+    "sqlalchemy>=2.0.43",
     "streamlit>=1.49.1",
 ]
