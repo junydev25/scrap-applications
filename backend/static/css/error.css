@@ -1,0 +1,46 @@
+/* static/css/error.css */
+.error-body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f5f5f5;
+}
+
+.error-container {
+    max-width: 400px;
+    text-align: center;
+    background: white;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.error-code {
+    color: #666;
+    font-size: 4rem;
+    margin: 0 0 20px 0;
+}
+
+.error-message {
+    margin: 15px 0;
+    line-height: 1.6;
+    color: #555;
+}
+
+.error-button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.error-button:hover {
+    background: #0056b3;
+}

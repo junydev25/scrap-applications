@@ -1,0 +1,111 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SWEmpire</title>
+    <link rel="stylesheet" href="{% static "approvals/css/approvals.css" %}">
+</head>
+<body class="page-container">
+<h1 class="page-title">Approvals</h1>
+
+<nav class="nav-bar">
+    <span class="nav-user">현재 로그인한 유저: {{ request.user.username }}</span>
+    <span>
+        <a href="{% url 'users:logout' %}" class="nav-link">Logout</a>
+    </span>
+</nav>
+
+{% if messages %}
+    <script>
+        {% for message in messages %}
+            alert("{{ message }}");
+        {% endfor %}
+    </script>
+{% endif %}
+
+<div>
+    {% if approvals.count > 0 %}
+        <div class="card">
+            <div class="approval-header">
+                <span class="header-id">ID</span>
+                <span class="header-field">제목</span>
+                <span class="header-field">신청날짜</span>
+                <span class="header-field">신청자</span>
+            </div>
+            <ul class="approval-list">
+                {% for approval in approvals %}
+                    {% if request.GET.approval_id == approval.id|stringformat:"s" %}
+                        <a href="{% url 'approvals:' %}" class="approval-item-link">
+                    {% else %}
+                        <a href="{% url 'approvals:' %}?page={{ page_obj.number }}&approval_id={{ approval.id }}#selected_approval"
+                           class="approval-item-link">
+                    {% endif %}
+                <li class="{% if request.GET.approval_id == approval.id|stringformat:'s' %}approval-item-selected{% else %}approval-item{% endif %}">
+                    <span class="approval-id">{{ approval.id }}</span>
+                    <span class="approval-field">{{ approval.title }}</span>
+                    <span class="approval-field">{{ approval.submitted_at|date:"Y년 n월 j일 H:i" }}</span>
+                    <span class="approval-field">{{ approval.applicant__username }}</span>
+                </li>
+                </a>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="pagination">
+            <form method="GET" action="{% url 'approvals:' %}">
+                <button type="submit" name="page" value="{{ page_obj.number|add:'-1' }}"
+                        class="btn btn-primary"
+                        {% if page_obj.number|add:'-1' < 1 %}disabled{% endif %}>이전
+                </button>
+            </form>
+            <span class="page-info">{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span>
+            <form method="GET" action="{% url 'approvals:' %}">
+                <button type="submit" name="page" value="{{ page_obj.number|add:'+1' }}"
+                        class="btn btn-primary"
+                        {% if page_obj.number|add:'+1' > page_obj.paginator.num_pages %}disabled{% endif %}>다음
+                </button>
+            </form>
+        </div>
+    {% else %}
+        <p class="empty-state">신청 내역이 없습니다.</p>
+    {% endif %}
+</div>
+
+{% if selected_approval %}
+    <div id="selected_approval" class="card">
+        <div class="card-body">
+            <p class="detail-field">
+                <span class="detail-label">신청자:</span>
+                <span class="detail-content">{{ selected_approval.applicant }}</span>
+            </p>
+            <p class="detail-field">
+                <span class="detail-label">신청날짜:</span>
+                <span class="detail-content">{{ selected_approval.submitted_at }}</span>
+            </p>
+            <p class="detail-field">
+                <span class="detail-label">상태:</span>
+                <span class="detail-content">{{ selected_approval.status }}</span>
+            </p>
+            <p class="detail-field">
+                <span class="detail-label">제목:</span>
+                <span class="detail-content">{{ selected_approval.title }}</span>
+            </p>
+            <p class="detail-field">
+                <span class="detail-label">신청 내역:</span>
+                <span class="detail-content">{{ selected_approval.content|linebreaksbr }}</span>
+            </p>
+
+            <form action="{% url 'approvals:approvals_action' %}" method="post" class="action-buttons">
+                {% csrf_token %}
+                <input type="hidden" name="approval_id" value="{{ selected_approval.id }}">
+                <button type="submit" name="action" value="approved" class="btn btn-success">승인</button>
+                <button type="submit" name="action" value="rejected" class="btn btn-danger">거부</button>
+            </form>
+        </div>
+    </div>
+{% endif %}
+</body>
+</html>

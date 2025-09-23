@@ -8,3 +8,19 @@ wheels/
 
 # Virtual environments
 .venv
+
+# Logs
+logs/
+
+# Environments
+.env*
+!.env.template
+
+# Production Environment
+backend/staticfiles/
+
+# Database
+infra/db/db.sqlite3
+
+# IDEA(Pycharm)
+.idea/

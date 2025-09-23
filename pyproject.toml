@@ -1,13 +1,24 @@
 [project]
-name = "scrapping-project"
+name = "scraping-project"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.10"
-dependencies = []
+dependencies = [
+    "django<5",
+    "django-environ>=0.12.0",
+    "django-prometheus>=2.4.1",
+    "django-seed>=0.3.1",
+    "django-structlog>=9.1.1",
+    "gunicorn>=23.0.0",
+    "requests>=2.32.5",
+]
 
 [dependency-groups]
 dev = [
     "black>=25.1.0",
-    "streamlit>=1.49.1",
+    "django-debug-toolbar>=6.0.0",
+    "drf-spectacular>=0.28.0",
+    "isort>=6.0.1",
+    "psycopg2-binary>=2.9.10",
 ]
