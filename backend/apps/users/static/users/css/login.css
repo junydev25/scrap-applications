@@ -1,0 +1,117 @@
+/* 기본 초기화 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 전체 페이지 */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* 로그인 박스 */
+.login-container {
+    background: white;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    position: relative; /* 에러 메시지 위치 기준점 */
+}
+
+/* 제목 */
+.login-title {
+    color: #333;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 24px;
+}
+
+/* Django form.as_p 스타일링 */
+form p {
+    margin-bottom: 20px;
+}
+
+/* 마지막 입력 필드와 버튼 사이 간격 */
+form p:last-of-type {
+    margin-bottom: 30px;
+}
+
+/* 라벨 */
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+    font-weight: bold;
+}
+
+/* 입력 필드 */
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+/* 입력 필드 포커스 */
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+/* 로그인 버튼 */
+button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* 버튼 호버 */
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* 에러 메시지 - 컨테이너 위에 띄우기 */
+.alert {
+    position: absolute;
+    top: -70px; /* 컨테이너 위쪽에 */
+    left: 0;
+    right: 0;
+    padding: 10px;
+    border-radius: 4px;
+    color: white;
+    font-size: 14px;
+}
+
+.alert.error {
+    background-color: #dc3545;
+}
+
+/* 모바일 대응 */
+@media (max-width: 480px) {
+    .login-container {
+        padding: 20px;
+    }
+
+    .login-title {
+        font-size: 20px;
+    }
+}

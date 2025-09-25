@@ -9,8 +9,18 @@ wheels/
 # Virtual environments
 .venv
 
-# SQLite
-db.sqlite3
+# Logs
+logs/
 
-# PyCharm
+# Environments
+.env*
+!.env.template
+
+# Production Environment
+backend/staticfiles/
+
+# Database
+infra/db/db.sqlite3
+
+# IDEA(Pycharm)
 .idea/

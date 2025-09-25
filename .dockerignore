@@ -1,0 +1,4 @@
+**/admin.py
+**/tests.py
+**/*.pyc
+**/__pycache__/

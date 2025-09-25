@@ -1,0 +1,30 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SWEmpire</title>
+    <link rel="stylesheet" href="{% static "users/css/login.css" %}">
+</head>
+<body>
+<div class="login-container">
+    <div class="login-header">
+        <h1 class="login-title">SWEmpire</h1>
+    </div>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert error">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">로그인</button>
+    </form>
+</div>
+</body>
+</html>
