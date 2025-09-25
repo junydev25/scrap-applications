@@ -17,6 +17,8 @@ click==8.2.1
     # via black
 colorama==0.4.6 ; sys_platform == 'win32'
     # via click
+cx-oracle==8.3.0
+    # via scraping-project
 django==4.2.24
     # via
     #   django-debug-toolbar

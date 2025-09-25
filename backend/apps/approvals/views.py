@@ -10,9 +10,15 @@ from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator
 from django.db import transaction
 from django.forms import model_to_dict
-from django.http import (Http404, HttpRequest, HttpResponse,
-                         HttpResponseBadRequest, HttpResponseForbidden,
-                         HttpResponseServerError, JsonResponse)
+from django.http import (
+    Http404,
+    HttpRequest,
+    HttpResponse,
+    HttpResponseBadRequest,
+    HttpResponseForbidden,
+    HttpResponseServerError,
+    JsonResponse,
+)
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
@@ -62,7 +68,7 @@ class ApprovalService:
         return get_object_or_404(Approval, pk=approval_id)
 
     def validate_current_user_permission(
-            self, approval: Approval, current_user: User
+        self, approval: Approval, current_user: User
     ) -> bool:
         if approval.approved_by != current_user:
             raise PermissionDenied("해당 신청 내역을 승인 또는 거부할 권한이 없습니다.")

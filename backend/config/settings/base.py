@@ -1,5 +1,6 @@
 from pathlib import Path
 
+import cx_Oracle
 import environ
 import structlog
 
@@ -43,7 +44,9 @@ INSTALLED_APPS = [
 ]
 
 if DJANGO_ENV == "dev":
-    INSTALLED_APPS += ["django.contrib.admin", ]
+    INSTALLED_APPS += [
+        "django.contrib.admin",
+    ]
 
 # 요청과 응답 사이에 거쳐 가는 필터들
 # 순서가 중요(위에서부터 차례로 실행)
@@ -83,7 +86,7 @@ WSGI_APPLICATION = "backend.config.wsgi.application"
 # Database
 # Database 연결 설정
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-db_name=None
+db_name = None
 if DJANGO_ENV == "dev":
     db_file_path = BASE_DIR / "infra" / "db"
     db_file_path.mkdir(parents=True, exist_ok=True)

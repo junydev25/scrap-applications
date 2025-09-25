@@ -23,10 +23,13 @@ class UserTest(TestCase):
         self.assertFalse(response.wsgi_request.user.is_authenticated)
 
     def test_login_success(self):
-        response = self.client.post(self.login_url, {
-            "username": "testuser",
-            "password": "testpass",
-        })
+        response = self.client.post(
+            self.login_url,
+            {
+                "username": "testuser",
+                "password": "testpass",
+            },
+        )
 
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url, reverse("approvals:"))
@@ -35,23 +38,25 @@ class UserTest(TestCase):
         self.assertEqual(response.wsgi_request.user.username, "testuser")
 
     def test_login_failure_wrong_password(self):
-        response = self.client.post(self.login_url, {
-            "username": "testuser",
-            "password": "wrongpass",
-        })
+        response = self.client.post(
+            self.login_url,
+            {
+                "username": "testuser",
+                "password": "wrongpass",
+            },
+        )
 
         messages_list = list(messages.get_messages(response.wsgi_request))
         self.assertEqual(len(messages_list), 1)
-        self.assertEqual(str(messages_list[0]), "로그인에 실패했습니다. 다시 로그인해주세요.")
+        self.assertEqual(
+            str(messages_list[0]), "로그인에 실패했습니다. 다시 로그인해주세요."
+        )
 
         self.assertFalse(response.wsgi_request.user.is_authenticated)
 
     def test_login_failure_empty_fields(self):
         """빈 필드로 로그인 실패 테스트"""
-        response = self.client.post(self.login_url, {
-            "username": "",
-            "password": ""
-        })
+        response = self.client.post(self.login_url, {"username": "", "password": ""})
 
         # 폼 에러가 있는지 확인
         self.assertContains(response, "form")
@@ -66,4 +71,3 @@ class UserTest(TestCase):
         # approvals 페이지로 리다이렉트되어야 함
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse("approvals:"))
-

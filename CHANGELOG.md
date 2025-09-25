@@ -16,7 +16,6 @@
 ### Changed
 
 - Session Login을 JWT로 변경
-- Embedded Database(`SQLite3`)를 외부 DataBase 서버로 분리
 
 ### Deprecated
 
@@ -29,6 +28,14 @@
 - [Docker] 외부에서 접근이 가능하면 안되는 접근이 가능
     - `Prometheus`
     - `CAdvisor`
+    - `Oracle DB Exporter`
+- [Environment] 환경변수가 `Dockerfile`과 `docker-compose.yml`에 노출
+
+## [1.1.0] - 2025-09-25
+
+### Added
+
+- Embedded Database(`SQLite3`)를 외부 DataBase(`Oracle`)로 분리
 
 ## [1.0.0] - 2025-09-24
 

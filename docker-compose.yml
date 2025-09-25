@@ -5,14 +5,44 @@ services:
       dockerfile: Dockerfile
     container_name: web
     volumes:
-#      - ./backend/static:/app/backend/static:ro
-#      - ./backend/staticfiles:/app/backend/staticfiles:ro
       - static_files:/app/backend/staticfiles
       - web_logs:/app/logs:rw
     env_file:
-      - .env.dev
+      - .env.prod
+    depends_on:
+      oracle-db:
+        condition: service_healthy
     networks:
       - app-network
+    restart: unless-stopped
+  oracle-db:
+    image: gvenzl/oracle-xe:21-slim-faststart
+    container_name: oracle-db
+    env_file:
+      - .env.prod
+    volumes:
+      - oracle_data:/opt/oracle/oradata
+    networks:
+      - app-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "healthcheck.sh"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 300s
+  oracle-exporter:
+    image: ghcr.io/iamseth/oracledb_exporter:0.6.0
+    container_name: oracle-exporter
+    ports:
+      - "9161:9161"  # Oracle exporter 포트
+    environment:
+      - DATA_SOURCE_NAME=oracle://django_db:DjangoPassword123@oracle-db:1521/XEPDB1
+    networks:
+      - app-network
+    depends_on:
+      - oracle-db
+      - prometheus
     restart: unless-stopped
   nginx:
     image: nginx:1.29.1-alpine
@@ -87,3 +117,4 @@ volumes:
   prometheus_data:
   grafana_data:
   static_files:
+  oracle_data:

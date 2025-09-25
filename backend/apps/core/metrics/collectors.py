@@ -12,7 +12,7 @@ from backend.apps.users.models import User
 class MetricsCollector:
     @staticmethod
     def track_user_activity(
-            activity_type: str, status: str = "success", user_id: Optional[int] = None
+        activity_type: str, status: str = "success", user_id: Optional[int] = None
     ) -> None:
         UserMetrics.activities.labels(
             activity_type=activity_type,
@@ -21,10 +21,10 @@ class MetricsCollector:
 
     @staticmethod
     def track_approval_operation(
-            operation_type: str,
-            approval_type: str,
-            status: str = "success",
-            duration: Optional[float] = None,
+        operation_type: str,
+        approval_type: str,
+        status: str = "success",
+        duration: Optional[float] = None,
     ) -> None:
         ApprovalMetrics.operations.labels(
             operation_type=operation_type,
@@ -48,10 +48,10 @@ class MetricsCollector:
 
     @staticmethod
     def track_error(
-            error_type: str,
-            component: str,
-            severity: str = "error",
-            exception: Optional[Exception] = None,
+        error_type: str,
+        component: str,
+        severity: str = "error",
+        exception: Optional[Exception] = None,
     ) -> None:
         ErrorMetrics.error_counter.labels(
             error_type=error_type,
